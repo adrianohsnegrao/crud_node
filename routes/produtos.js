@@ -34,5 +34,21 @@ router.get('/produto', (req, res) => {
     });
 });
 
+router.put('/produto/:id', (req, res) => {
+    const { nome, quantidade, preco } = req.body;
+    const sql = `UPDATE produtos SET nome = ?, quantidade = ?, preco = ? WHERE id = ?`;
+
+    db.run(sql, [nome, quantidade, preco, req.params.id], function(err) {
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({
+            message: "Produto atualizado com sucesso",
+            data: { id: req.params.id, nome, quantidade, preco },
+            changes: this.changes
+        });
+    });
+});
 
 module.exports = router;
