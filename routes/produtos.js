@@ -19,5 +19,20 @@ router.post('/produto', (req, res) => {
     });
 });
 
+router.get('/produto', (req, res) => {
+    const sql = "SELECT * FROM produtos";
+
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({
+            "message": "Sucesso",
+            "data": rows
+        });
+    });
+});
+
 
 module.exports = router;
