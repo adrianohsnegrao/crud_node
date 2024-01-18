@@ -51,4 +51,17 @@ router.put('/produto/:id', (req, res) => {
     });
 });
 
+router.delete('/produto/:id', (req, res) => {
+    const sql = 'DELETE FROM produtos WHERE id = ?';
+
+    db.run(sql, req.params.id, function(err) {
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({ "message": "Produto deletado com sucesso", changes: this.changes });
+    });
+});
+
+
 module.exports = router;
